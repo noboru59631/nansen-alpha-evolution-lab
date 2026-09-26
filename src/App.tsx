@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Activity, AlertTriangle, ArrowRight, BrainCircuit, Database, FlaskConical, RefreshCw, ShieldCheck, Sparkles } from 'lucide-react'
 import { auditToken, type AuditResult, type HistoricalHolding } from './analysis'
 import { discoverTokens, getApiStatus, getTokenHistory, type NansenMeta } from './nansen'
+import { savedResult, savedToken, SAVED_TOKEN_ADDRESS } from './snapshot'
 
 function isoDaysAgo(days: number) {
   const date = new Date()
@@ -30,10 +31,10 @@ function chartPoints(curve: AuditResult['curve']) {
 function App() {
   const [configured, setConfigured] = useState<boolean | null>(null)
   const [chain, setChain] = useState('solana')
-  const [tokens, setTokens] = useState<HistoricalHolding[]>([])
-  const [selectedAddress, setSelectedAddress] = useState('')
+  const [tokens, setTokens] = useState<HistoricalHolding[]>([savedToken])
+  const [selectedAddress, setSelectedAddress] = useState(SAVED_TOKEN_ADDRESS)
   const [history, setHistory] = useState<HistoricalHolding[]>([])
-  const [result, setResult] = useState<AuditResult | null>(null)
+  const [result, setResult] = useState<AuditResult | null>(savedResult)
   const [meta, setMeta] = useState<NansenMeta | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -45,10 +46,10 @@ function App() {
 
   function changeChain(next: string) {
     setChain(next)
-    setTokens([])
-    setSelectedAddress('')
+    setTokens(next === 'solana' ? [savedToken] : [])
+    setSelectedAddress(next === 'solana' ? SAVED_TOKEN_ADDRESS : '')
     setHistory([])
-    setResult(null)
+    setResult(next === 'solana' ? savedResult : null)
     setError('')
   }
 
@@ -56,7 +57,7 @@ function App() {
     setLoading(true)
     setError('')
     try {
-      let candidates = tokens
+      let candidates = tokens.filter((token) => token.token_address !== SAVED_TOKEN_ADDRESS)
       let address = selectedAddress
       if (!candidates.length) {
         const discovery = await discoverTokens(chain, startDate)
@@ -81,9 +82,12 @@ function App() {
   }
 
   const live = Boolean(result && history.length)
+  const saved = Boolean(result && !live)
+  const displayed = Boolean(result)
   const flowLabel = result?.latestFlow == null ? '—' : result.latestFlow > 0 ? 'ACCUMULATION' : result.latestFlow < 0 ? 'DISTRIBUTION' : 'FLAT'
   const lifecycle = ['DISCOVERED', 'LIVE', 'DECAYING', 'DEAD']
   const points = result ? chartPoints(result.curve) : ''
+  const crowdingScore = result?.crowdingPressure == null ? '—' : `${Math.round(result.crowdingPressure * 100)} / 100`
 
   return <main>
     <header className="topbar">
@@ -93,26 +97,26 @@ function App() {
 
     <section className="intro">
       <div><div className="eyebrow accent">POINT-IN-TIME EDGE AUDIT</div><h2>Finding alpha is easy.<br/><em>Knowing whether it is still alpha is the edge.</em></h2><p>Nansen shows who is moving. This lab asks whether that historical signal is still alive.</p></div>
-      <div className={`mode ${live ? 'live' : configured ? 'ready' : ''}`}><span className="status-dot"/>{live ? 'LIVE · NANSEN DATA' : configured ? 'READY · LIVE NOT LOADED' : configured === false ? 'DEMO / NO-LIVE-DATA' : 'CHECKING API'}<small>{live ? `${history.length} settled daily snapshots · ${selected?.token_symbol}` : configured ? 'Run a point-in-time audit to load measured values' : 'No numerical result is displayed without a key'}</small></div>
+      <div className={`mode ${live ? 'live' : saved ? 'saved' : configured ? 'ready' : ''}`}><span className="status-dot"/>{live ? 'LIVE · NANSEN DATA' : saved ? 'SAVED · VERIFIED RESEARCH' : configured ? 'READY · LIVE NOT LOADED' : configured === false ? 'DEMO / NO-LIVE-DATA' : 'CHECKING API'}<small>{live ? `${history.length} settled daily snapshots · ${selected?.token_symbol}` : saved ? 'PERCOLATOR · 90-day measured study · no live credits used' : configured ? 'Run a point-in-time audit to load measured values' : 'No numerical result is displayed without a key'}</small></div>
     </section>
 
     <section className="controls">
       <label>CHAIN<select value={chain} onChange={(event) => changeChain(event.target.value)}><option value="solana">Solana</option><option value="ethereum">Ethereum</option><option value="base">Base</option></select></label>
       <label>TOKEN · FIXED AT WINDOW START<select value={selectedAddress} disabled={!tokens.length} onChange={(event) => { setSelectedAddress(event.target.value); setResult(null); setHistory([]) }}><option value="">{tokens.length ? 'Select a token' : 'Loaded after discovery'}</option>{tokens.map((token) => <option key={token.token_address} value={token.token_address}>{token.token_symbol} · {compactUsd(token.value_usd)} SM held at discovery</option>)}</select></label>
       <label>SETTLED WINDOW<input value={`${startDate} → ${endDate}`} readOnly/></label>
-      <button onClick={runAudit} disabled={loading || configured !== true}>{loading ? <RefreshCw className="spin"/> : <Sparkles/>}{loading ? 'QUERYING NANSEN…' : result ? 'RERUN LIVE AUDIT' : 'RUN LIVE AUDIT'}</button>
+      <button onClick={runAudit} disabled={loading || configured !== true}>{loading ? <RefreshCw className="spin"/> : <Sparkles/>}{loading ? 'QUERYING NANSEN…' : 'RERUN LIVE AUDIT'}</button>
     </section>
 
     {error && <div className="error-state"><AlertTriangle/><div><b>LIVE AUDIT FAILED</b><span>{error}</span></div></div>}
 
-    <section className={`hero-moment ${live ? '' : 'empty'}`}>
-      <div className="hero-head"><div><div className="eyebrow accent">THE HERO MOMENT</div><h3>{live ? `${selected?.token_symbol} looked like a signal. Is it still an edge?` : 'Load a live signal. Audit its lifecycle.'}</h3></div>{live && <span className={`meta-pill ${result?.metaState.toLowerCase()}`}>META STATE · {result?.metaState}</span>}</div>
+    <section className={`hero-moment ${displayed ? '' : 'empty'}`}>
+      <div className="hero-head"><div><div className="eyebrow accent">THE HERO MOMENT</div><h3>{displayed ? `${selected?.token_symbol} looked like a signal. Is it still an edge?` : 'Load a live signal. Audit its lifecycle.'}</h3></div>{displayed && <span className={`meta-pill ${result?.metaState.toLowerCase()}`}>META STATE · {result?.metaState}</span>}</div>
       <div className="hero-grid">
-        <HeroDatum label="SMART MONEY" value={live ? flowLabel : '—'} detail={live ? `Latest balance change ${percent(result!.latestFlow)}` : 'No placeholder value'}/>
-        <HeroDatum label="AGENT CONSENSUS" value={live ? percent(result!.agentAgreement, 0) : '—'} detail={live ? `${result!.agents.length} deterministic agents` : 'No placeholder value'}/>
-        <HeroDatum label="CROWDING PRESSURE" value={live ? percent(result!.crowdingPressure, 0) : '—'} detail={live ? 'Consensus + SM concentration percentile' : 'No placeholder value'}/>
-        <HeroDatum label="ALPHA STATUS" value={live ? result!.status : '—'} detail={live ? result!.reason : 'No placeholder value'} emphasis/>
-        <HeroDatum label="AFTERLIFE" value={live ? result!.afterlife : '—'} detail={live ? 'Only classified after statistically confirmed death' : 'No placeholder value'}/>
+        <HeroDatum label="SMART MONEY" value={displayed ? flowLabel : '—'} detail={displayed ? `Latest balance change ${percent(result!.latestFlow)}` : 'No placeholder value'}/>
+        <HeroDatum label="MODEL AGREEMENT" value={displayed ? percent(result!.agentAgreement, 0) : '—'} detail={displayed ? `${result!.agents.length || 4} deterministic agents · agreement share` : 'No placeholder value'}/>
+        <HeroDatum label="CROWDING SCORE" value={displayed ? crowdingScore : '—'} detail={displayed ? '0–100 score · agreement + concentration' : 'No placeholder value'}/>
+        <HeroDatum label="ALPHA STATUS" value={displayed ? result!.status : '—'} detail={displayed ? result!.reason : 'No placeholder value'} emphasis/>
+        <HeroDatum label="AFTERLIFE" value={displayed ? result!.afterlife : '—'} detail={displayed ? 'Only classified after statistically confirmed death' : 'No placeholder value'}/>
       </div>
     </section>
 
@@ -126,22 +130,22 @@ function App() {
     </section>
 
     <section className="metric-grid">
-      <Metric icon={<FlaskConical/>} label="ALPHA HALF-LIFE" value={live && result!.alphaHalfLifeDays != null ? `${result!.alphaHalfLifeDays}d` : '—'} detail="First OOS rolling edge ≤ 50% of train"/>
-      <Metric icon={<BrainCircuit/>} label="AGENT DISAGREEMENT" value={live ? percent(result!.agentDisagreement, 0) : '—'} detail="1 − largest vote share"/>
-      <Metric icon={<Activity/>} label="OOS EXPECTANCY" value={live ? percent(result!.oosExpectancy) : '—'} detail={live && result!.oosCi ? `95% CI ${percent(result!.oosCi[0])} to ${percent(result!.oosCi[1])}` : 'Untouched final 40%'}/>
-      <Metric icon={<Database/>} label="SAMPLE SIZE" value={live ? `${result!.sampleSize}` : '—'} detail={live ? `${result!.trainSize} train · ${result!.oosSize} OOS pairs` : 'Consecutive daily pairs only'}/>
-      <Metric icon={<ShieldCheck/>} label="SIGNAL AGE" value={live && result!.signalAgeDays != null ? `${result!.signalAgeDays}d` : '—'} detail="Nansen token_age_days at final snapshot"/>
-      <Metric icon={<FlaskConical/>} label="COST-ADJUSTED" value={live ? percent(result!.costAdjustedExpectancy) : '—'} detail="10 bps deducted per observed signal"/>
+      <Metric icon={<FlaskConical/>} label="ALPHA HALF-LIFE" value={displayed && result!.alphaHalfLifeDays != null ? `${result!.alphaHalfLifeDays}d` : '—'} detail="First OOS rolling edge ≤ 50% of train"/>
+      <Metric icon={<BrainCircuit/>} label="DISAGREEMENT SCORE" value={displayed ? percent(result!.agentDisagreement, 0) : '—'} detail="1 − largest vote share"/>
+      <Metric icon={<Activity/>} label="OOS EXPECTANCY" value={displayed ? percent(result!.oosExpectancy) : '—'} detail={displayed && result!.oosCi ? `95% CI ${percent(result!.oosCi[0])} to ${percent(result!.oosCi[1])}` : 'Untouched final 40%'}/>
+      <Metric icon={<Database/>} label="SAMPLE SIZE" value={displayed ? `${result!.sampleSize}` : '—'} detail={displayed ? `${result!.trainSize} train · ${result!.oosSize} OOS pairs` : 'Consecutive daily pairs only'}/>
+      <Metric icon={<ShieldCheck/>} label="SIGNAL AGE" value={displayed && result!.signalAgeDays != null ? `${result!.signalAgeDays}d` : '—'} detail="Nansen token_age_days at final snapshot"/>
+      <Metric icon={<FlaskConical/>} label="COST-ADJUSTED" value={displayed ? percent(result!.costAdjustedExpectancy) : '—'} detail="10 bps deducted per observed signal"/>
     </section>
 
     <section className="two-column">
-      <div className="panel chart-panel"><div className="panel-title"><Database/><div><h3>MEASURED EDGE CURVE</h3><small>Cumulative cost-adjusted signal return · not token price</small></div></div>{points ? <div className="chart"><svg viewBox="0 0 700 220" preserveAspectRatio="none"><polyline points={points} fill="none" stroke="currentColor" strokeWidth="3"/></svg><div className="split" style={{ left: `${(result!.trainSize / result!.sampleSize) * 100}%` }}><span>OOS</span></div></div> : <div className="empty-chart">Run a live audit. No synthetic curve is rendered.</div>}</div>
-      <div className="panel agents-panel"><div className="panel-title"><BrainCircuit/><div><h3>INDEPENDENT SIMPLE AGENTS</h3><small>Consensus is treated as a crowding proxy</small></div></div><div className="agent-list">{live ? result!.agents.map((agent) => <div className="agent" key={agent.name}><div><b>{agent.name}</b><small>{agent.evidence}</small></div><span className={agent.direction.toLowerCase()}>{agent.direction}</span></div>) : <div className="empty-agents">No votes before live data is loaded.</div>}</div></div>
+      <div className="panel chart-panel"><div className="panel-title"><Database/><div><h3>MEASURED EDGE CURVE</h3><small>Cumulative cost-adjusted signal return · not token price</small></div></div>{points ? <div className="chart"><svg viewBox="0 0 700 220" preserveAspectRatio="none"><polyline points={points} fill="none" stroke="currentColor" strokeWidth="3"/></svg><div className="split" style={{ left: `${(result!.trainSize / result!.sampleSize) * 100}%` }}><span>OOS</span></div></div> : <div className="empty-chart">{saved ? 'Saved snapshot stores verified summary metrics; live audit renders the curve.' : 'Run a live audit. No synthetic curve is rendered.'}</div>}</div>
+      <div className="panel agents-panel"><div className="panel-title"><BrainCircuit/><div><h3>INDEPENDENT SIMPLE AGENTS</h3><small>Agreement is treated as a crowding proxy</small></div></div><div className="agent-list">{live ? result!.agents.map((agent) => <div className="agent" key={agent.name}><div><b>{agent.name}</b><small>{agent.evidence}</small></div><span className={agent.direction.toLowerCase()}>{agent.direction}</span></div>) : saved ? <div className="empty-agents">Saved snapshot records 50% model agreement. Rerun live to inspect current evidence.</div> : <div className="empty-agents">No votes before live data is loaded.</div>}</div></div>
     </section>
 
-    <section className="panel trace-panel"><div className="panel-title"><ShieldCheck/><div><h3>WHY THIS RESULT</h3><small>Endpoint → field → formula → measured value</small></div></div>{live ? <div className="trace-table">{result!.trace.map((item) => <div className="trace-row" key={item.formula}><code>{item.source}</code><span>{item.fields}</span><b>{item.formula}</b><strong>{item.value}</strong></div>)}</div> : <div className="empty-trace">Methodology trace appears only after a successful live audit.</div>}</section>
+    <section className="panel trace-panel"><div className="panel-title"><ShieldCheck/><div><h3>WHY THIS RESULT</h3><small>Endpoint → field → formula → measured value</small></div></div>{displayed ? <div className="trace-table">{result!.trace.map((item) => <div className="trace-row" key={item.formula}><code>{item.source}</code><span>{item.fields}</span><b>{item.formula}</b><strong>{item.value}</strong></div>)}</div> : <div className="empty-trace">Methodology trace appears only after a successful live audit.</div>}</section>
 
-    <footer><span>{live ? `LIVE · ${meta?.endpoint} · credits used ${meta?.creditsUsed ?? 'unreported'} · remaining ${meta?.creditsRemaining ?? 'unreported'}` : 'No raw Nansen data is persisted or redistributed.'}</span><span>Historical research classification · not investment advice</span></footer>
+    <footer><span>{live ? `LIVE · ${meta?.endpoint} · credits used ${meta?.creditsUsed ?? 'unreported'} · remaining ${meta?.creditsRemaining ?? 'unreported'}` : saved ? 'SAVED / VERIFIED RESEARCH SNAPSHOT · no live credits used' : 'No raw Nansen data is persisted or redistributed.'}</span><span>Historical research classification · not investment advice</span></footer>
   </main>
 }
 

@@ -1,13 +1,17 @@
 # Submission Kit
 
+**Production:** https://referenced-chatgpt-conversation-this-is-an-2-ftcpyodti.vercel.app
+**GitHub:** https://github.com/noboru59631/nansen-alpha-evolution-lab
+**Powered by Nansen:** https://www.nansen.ai/
+
 ## 30–60 second silent demo
 
 Use a desktop viewport and keep the browser zoom at 100%. Do not expose `.env.local`, the API key, developer tools, or usage-account details.
 
-1. **Before recording.** Load the Solana universe once, select `PERCOLATOR`, then leave the result cleared. This prepares the strongest measured case without exposing a key or using mock data.
-2. **0–6s — Thesis.** Start at the top: “Finding alpha is easy. Knowing whether it is still alpha is the edge.” Keep `READY · LIVE NOT LOADED` visible so the judge sees that no placeholder values are present.
-3. **6–14s — Live query.** Click **RUN LIVE AUDIT**. Let the loading state show, then hold on the green `LIVE · NANSEN DATA` badge and settled snapshot count.
-4. **14–26s — Hero Moment.** Show Smart Money direction → Agent Consensus → Crowding Pressure → `DEAD` → `INVERTED` → `FADE`.
+1. **Before recording.** Open the Production URL. The first render is the saved, measured PERCOLATOR snapshot; do not expose `.env.local`, the API key, developer tools, or usage-account details.
+2. **0–6s — Thesis.** Start at the top: “Finding alpha is easy. Knowing whether it is still alpha is the edge.” Show `SAVED · VERIFIED RESEARCH` and the “no live credits used” label.
+3. **6–14s — Live query.** If the live key is enabled, click **RERUN LIVE AUDIT** once. Let the loading state show, then hold on the green `LIVE · NANSEN DATA` badge and settled snapshot count. Otherwise keep the saved state and show the explicit distinction.
+4. **14–26s — Hero Moment.** Show Smart Money direction → Model Agreement → Crowding Score → `DEAD` → `INVERTED` → `FADE`.
 5. **26–38s — Lifecycle.** Scroll just enough to center `DISCOVERED → LIVE → DECAYING → DEAD → AFTERLIFE`. Pause on the measured `DEAD → INVERTED` state.
 6. **38–50s — Evidence.** Show OOS expectancy, its fully negative 95% interval, sample size, half-life, and measured edge curve.
 7. **50–60s — Trust.** End on **WHY THIS RESULT**, where endpoint, fields, formulas, costs, and values are visible.

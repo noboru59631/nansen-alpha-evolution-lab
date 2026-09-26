@@ -19,7 +19,7 @@ function isoDaysAgo(days: number) {
 
 async function apiKey() {
   const env = await readFile('.env.local', 'utf8')
-  const line = env.split(/\r?\n/).find((candidate) => /^(VITE_)?NANSEN_API_KEY=/.test(candidate))
+  const line = env.split(/\r?\n/).find((candidate) => /^NANSEN_API_KEY=/.test(candidate))
   const key = line?.slice(line.indexOf('=') + 1).trim()
   if (!key) throw new Error('Nansen API key is missing from .env.local')
   return key

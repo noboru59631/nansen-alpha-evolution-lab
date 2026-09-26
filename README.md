@@ -1,5 +1,9 @@
 # Nansen Alpha Evolution Lab
 
+**Live Demo:** https://referenced-chatgpt-conversation-this-is-an-2-ftcpyodti.vercel.app
+**GitHub:** https://github.com/noboru59631/nansen-alpha-evolution-lab
+**Powered by:** [Nansen](https://www.nansen.ai/)
+
 > **Finding alpha is easy. Knowing whether it is still alpha is the edge.**
 
 Nansen answers **“Who is moving?”** Alpha Evolution Lab adds a complementary research layer: **“Is that historical signal still alive?”** It audits a Smart Money signal through `DISCOVERED → LIVE → DECAYING → DEAD → NEUTRAL / INVERTED / REBORN`, without claiming to predict prices or execute trades.
@@ -45,7 +49,14 @@ This result is intentionally not polished into a win-rate claim. Most signals re
 - A Hero Moment connecting Smart Money direction, consensus, crowding, lifecycle, afterlife, and meta state.
 - A trace from Nansen endpoint → field → formula → displayed value.
 
-No fixture, mock, demo number, or synthetic chart is rendered in LIVE mode. Without a key or before a successful request, all measured fields remain `—`.
+No fixture, mock, demo number, or synthetic chart is rendered in LIVE mode. The public page initially shows the measured PERCOLATOR result as `SAVED · VERIFIED RESEARCH`; it is not live data and does not consume credits. Only an explicit **RERUN LIVE AUDIT** can replace it with a `LIVE · NANSEN DATA` result. If the server-side key is unavailable, the app remains a clearly labeled demo state.
+
+## Production safety
+
+- The browser calls only `/api/nansen/*`; `NANSEN_API_KEY` exists only as a server-side Vercel Environment Variable.
+- The public first render is a saved, verified research snapshot. It is always labeled separately from live data.
+- Live requests validate the body, cap the historical window, use a 20-second timeout, cache successful identical requests for 60 seconds, suppress duplicate in-flight requests, and rate-limit each forwarded client address to 12 requests per 10 minutes per function instance.
+- Vercel Authentication is disabled for the public showcase URL so judges can open it anonymously. Nansen is not the official product owner or operator of this app.
 
 ## Methodology
 
@@ -102,6 +113,8 @@ The project performs deterministic statistical analysis on API responses. It doe
 ```text
 Browser dashboard
       │ local /api/nansen proxy — API key never enters the client bundle
+      ▼
+Vercel serverless API — secret + validation + cache + rate limit
       ▼
 Nansen historical-holdings
       │ settled discovery snapshot fixes the token universe

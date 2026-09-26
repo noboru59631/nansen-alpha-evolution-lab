@@ -49,5 +49,5 @@ function nansenProxy(apiKey: string | undefined): Plugin {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  return { plugins: [react(), nansenProxy(env.NANSEN_API_KEY || env.VITE_NANSEN_API_KEY)] }
+  return { plugins: [react(), nansenProxy(env.NANSEN_API_KEY)] }
 })
