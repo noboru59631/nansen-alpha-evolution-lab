@@ -6,7 +6,9 @@
 
 > **Finding alpha is easy. Knowing whether it is still alpha is the edge.**
 
-Nansen answers **“Who is moving?”** Alpha Evolution Lab adds a complementary research layer: **“Is that historical signal still alive?”** It audits a Smart Money signal through `DISCOVERED → LIVE → DECAYING → DEAD → NEUTRAL / INVERTED / REBORN`, without claiming to predict prices or execute trades.
+**Nansen reveals the signal. Alpha Evolution Lab measures its lifecycle.**
+
+Nansen answers **“Who is moving?”** Alpha Evolution Lab starts where Smart Money discovery ends: **“Is that historical signal still alive?”** It audits a Smart Money signal through `DISCOVERED → LIVE → DECAYING → DEAD → NEUTRAL / INVERTED / REBORN`, without claiming to predict prices or execute trades.
 
 The central research question is: **When alpha dies, does it disappear, invert, or return?**
 
@@ -175,7 +177,7 @@ Current status: typecheck PASS, 4 tests PASS, production build PASS. The tests c
 
 The latest official [Meridian Buildathon FAQ](https://release.nansen.ai/help/articles/3540155-nansen-meridian-buildathon-sep-14-27) requires **100+ API calls** between Sep 14–27. The campaign landing page still contains an older **1,000 calls** line. This project follows the latest FAQ while explicitly recording the discrepancy.
 
-Nansen [Usage Analytics](https://app.nansen.ai/api?tab=usage-analytics) showed **Used Today: 101 / Total Usage: 101** after the fixed-universe study and 60-day robustness validation. The requests were substantive candidate discovery and token-history analyses; no calls were generated solely to increase the count.
+Nansen [Usage Analytics](https://app.nansen.ai/api?tab=usage-analytics) showed **Used Today: 106 / Total Usage: 106** after the fixed-universe study, robustness validation, and one production LIVE Audit. The requests were substantive candidate discovery and token-history analyses; no calls were generated solely to increase the count.
 
 The repository must remain public. Never commit `.env.local`, API keys, or raw API exports.
 
