@@ -1,6 +1,6 @@
 # Nansen Alpha Evolution Lab
 
-**Live Demo:** https://referenced-chatgpt-conversation-this-is-an-2-ftcpyodti.vercel.app
+**Live Demo:** https://nansen-alpha-evolution-lab.vercel.app
 **GitHub:** https://github.com/noboru59631/nansen-alpha-evolution-lab
 **Powered by:** [Nansen](https://www.nansen.ai/)
 
