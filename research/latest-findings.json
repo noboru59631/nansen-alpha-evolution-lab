@@ -1,0 +1,227 @@
+{
+  "generatedAt": "2026-09-26T22:05:44.375Z",
+  "source": "https://api.nansen.ai/api/v1/smart-money/historical-holdings",
+  "chain": "solana",
+  "settledWindow": {
+    "from": "2026-06-24",
+    "to": "2026-09-23"
+  },
+  "methodology": "Universe fixed at window start; signal at t = sign(balance_24h_percent_change); return = market_cap_usd(t+1)/market_cap_usd(t)-1; 10 bps cost; chronological 60/40 split.",
+  "callsMade": 13,
+  "creditsUsed": 13,
+  "creditsRemaining": "57",
+  "analyzedTokens": 12,
+  "lifecycleCounts": {
+    "UNKNOWN": 12
+  },
+  "afterlifeCounts": {
+    "ABSTAIN": 12
+  },
+  "invertedCases": [],
+  "tokens": [
+    {
+      "symbol": "CARDS",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.14014086281127455,
+      "oosExpectancy": -0.06433405411351363,
+      "oosCi": [
+        -0.1392792031694898,
+        0.01061109494246254
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.3858695652173913,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "TROLL",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.0049758202056392805,
+      "oosExpectancy": -0.001010801640147854,
+      "oosCi": [
+        -0.04059124461113553,
+        0.038569641330839816
+      ],
+      "alphaHalfLifeDays": 8,
+      "crowdingPressure": 0.2608695652173913,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "FARTCOIN",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.004204328543371381,
+      "oosExpectancy": -0.009609371620899412,
+      "oosCi": [
+        -0.034307805653261095,
+        0.015089062411462273
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "META",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.018650142207001563,
+      "oosExpectancy": -0.007524247246502015,
+      "oosCi": [
+        -0.03152514787746474,
+        0.01647665338446071
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "TRUMP",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.005809845915459526,
+      "oosExpectancy": -0.014934485721702763,
+      "oosCi": [
+        -0.0445264182580755,
+        0.014657446814669973
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.391304347826087,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "NEET",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.02607056154532477,
+      "oosExpectancy": -0.012392140791012212,
+      "oosCi": [
+        -0.05315270896328549,
+        0.028368427381261073
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.32608695652173914,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "USELESS",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.006856148604508361,
+      "oosExpectancy": 0.016099289710253276,
+      "oosCi": [
+        -0.04549283413327644,
+        0.07769141355378299
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.6032608695652174,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "BUTTCOIN",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.031438947460711665,
+      "oosExpectancy": -0.01836784102864393,
+      "oosCi": [
+        -0.057274878454103076,
+        0.020539196396815215
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.3858695652173913,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "CBBTC",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.004086943186845314,
+      "oosExpectancy": -0.006568962585175774,
+      "oosCi": [
+        -0.015686523245906348,
+        0.0025485980755547985
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "TSLAX",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0026125906155208102,
+      "oosExpectancy": -0.0044191501136270316,
+      "oosCi": [
+        -0.011932556777247699,
+        0.003094256549993636
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "JLP",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.004476952806224315,
+      "oosExpectancy": -0.0023803712038882843,
+      "oosCi": [
+        -0.010426928145194664,
+        0.005666185737418096
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "TRIPLET",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.03382453376082392,
+      "oosExpectancy": -0.008389552839134916,
+      "oosCi": [
+        -0.053925446296797554,
+        0.03714634061852772
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    }
+  ]
+}

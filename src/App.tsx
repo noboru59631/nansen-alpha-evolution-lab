@@ -1,41 +1,151 @@
-import { useState } from 'react'
-import { Activity, ArrowDownRight, ArrowUpRight, BrainCircuit, CircleHelp, Database, FlaskConical, LockKeyhole, RefreshCw, ShieldAlert, SlidersHorizontal } from 'lucide-react'
-import { afterlife, classifySnapshots, crowding, type Snapshot } from './analysis'
-import { getHistoricalHoldings, hasLiveKey } from './nansen'
+import { useEffect, useMemo, useState } from 'react'
+import { Activity, AlertTriangle, ArrowRight, BrainCircuit, Database, FlaskConical, RefreshCw, ShieldCheck, Sparkles } from 'lucide-react'
+import { auditToken, type AuditResult, type HistoricalHolding } from './analysis'
+import { discoverTokens, getApiStatus, getTokenHistory, type NansenMeta } from './nansen'
 
-const demoSnapshots: Snapshot[] = Array.from({ length: 16 }, (_, i) => ({ date: `2026-09-${String(i + 1).padStart(2, '0')}`, value_usd: 100000 + i * 1200, balance_24h_percent_change: i < 9 ? 0.08 - i * 0.004 : i < 12 ? 0.02 : -0.004 }))
+function isoDaysAgo(days: number) {
+  const date = new Date()
+  date.setUTCDate(date.getUTCDate() - days)
+  return date.toISOString().slice(0, 10)
+}
+
+function percent(value: number | null, digits = 2) {
+  return value == null ? '—' : `${value >= 0 ? '+' : ''}${(value * 100).toFixed(digits)}%`
+}
+
+function compactUsd(value?: number | null) {
+  if (value == null) return '—'
+  return new Intl.NumberFormat('en', { notation: 'compact', style: 'currency', currency: 'USD', maximumFractionDigits: 1 }).format(value)
+}
+
+function chartPoints(curve: AuditResult['curve']) {
+  if (curve.length < 2) return ''
+  const values = curve.map((point) => point.value)
+  const minimum = Math.min(...values)
+  const maximum = Math.max(...values)
+  const range = maximum - minimum || 1
+  return curve.map((point, index) => `${(index / (curve.length - 1)) * 700},${190 - ((point.value - minimum) / range) * 160}`).join(' ')
+}
 
 function App() {
-  const [snapshots, setSnapshots] = useState<Snapshot[]>(demoSnapshots)
-  const [loading, setLoading] = useState(false)
+  const [configured, setConfigured] = useState<boolean | null>(null)
   const [chain, setChain] = useState('solana')
-  const [token, setToken] = useState('Smart Money Holdings')
-  const result = classifySnapshots(snapshots)
-  const crowd = crowding(snapshots)
-  const life = afterlife(snapshots)
-  const live = hasLiveKey && snapshots !== demoSnapshots
+  const [tokens, setTokens] = useState<HistoricalHolding[]>([])
+  const [selectedAddress, setSelectedAddress] = useState('')
+  const [history, setHistory] = useState<HistoricalHolding[]>([])
+  const [result, setResult] = useState<AuditResult | null>(null)
+  const [meta, setMeta] = useState<NansenMeta | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const endDate = useMemo(() => isoDaysAgo(3), [])
+  const startDate = useMemo(() => isoDaysAgo(94), [])
+  const selected = tokens.find((token) => token.token_address === selectedAddress) ?? history.at(-1) ?? null
 
-  async function refresh() {
-    setLoading(true)
-    try { const next = await getHistoricalHoldings(chain, '2026-08-01', '2026-09-20'); setSnapshots(next); setToken(next[0]?.date ? `${chain} historical cohort` : token) }
-    catch { setSnapshots([]) }
-    finally { setLoading(false) }
+  useEffect(() => { getApiStatus().then((status) => setConfigured(status.configured)).catch(() => setConfigured(false)) }, [])
+
+  function changeChain(next: string) {
+    setChain(next)
+    setTokens([])
+    setSelectedAddress('')
+    setHistory([])
+    setResult(null)
+    setError('')
   }
 
+  async function runAudit() {
+    setLoading(true)
+    setError('')
+    try {
+      let candidates = tokens
+      let address = selectedAddress
+      if (!candidates.length) {
+        const discovery = await discoverTokens(chain, startDate)
+        candidates = discovery.data.filter((token) => token.token_address && token.market_cap_usd).slice(0, 100)
+        if (!candidates.length) throw new Error('No settled token candidates were returned for this date.')
+        address = candidates[0].token_address
+        setTokens(candidates)
+        setSelectedAddress(address)
+        setMeta(discovery.meta)
+      }
+      const tokenHistory = await getTokenHistory(chain, address || candidates[0].token_address, startDate, endDate)
+      setHistory(tokenHistory.data)
+      setResult(auditToken(tokenHistory.data))
+      setMeta(tokenHistory.meta)
+    } catch (caught) {
+      setHistory([])
+      setResult(null)
+      setError(caught instanceof Error ? caught.message : 'The live audit failed.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const live = Boolean(result && history.length)
+  const flowLabel = result?.latestFlow == null ? '—' : result.latestFlow > 0 ? 'ACCUMULATION' : result.latestFlow < 0 ? 'DISTRIBUTION' : 'FLAT'
+  const lifecycle = ['DISCOVERED', 'LIVE', 'DECAYING', 'DEAD']
+  const points = result ? chartPoints(result.curve) : ''
+
   return <main>
-    <header className="topbar"><div className="brand"><div className="logo">α</div><div><div className="eyebrow">NANSEN RESEARCH TOOL</div><h1>Alpha Evolution Lab</h1></div></div><div className="header-actions"><span className="powered">Powered by <strong>Nansen</strong></span><span className="deadline">BUILDATHON · SEP 27</span></div></header>
-    <section className="hero"><div><div className="eyebrow green">EDGE AUDIT / POINT-IN-TIME</div><h2>Finding alpha is easy.<br/><em>Knowing whether it is still alpha is the edge.</em></h2><p>When alpha dies, does it disappear, invert, or return?</p></div><div className={`mode ${live ? 'live' : ''}`}><span className="dot"/>{live ? 'LIVE DATA' : 'DEMO / NO-LIVE-DATA'}<small>{live ? 'Nansen historical snapshots loaded' : 'Add VITE_NANSEN_API_KEY to activate'}</small></div></section>
-    <section className="controls"><label>CHAIN<select value={chain} onChange={e => setChain(e.target.value)}><option value="solana">Solana</option><option value="ethereum">Ethereum</option><option value="base">Base</option></select></label><label>EDGE COHORT<input value={token} onChange={e => setToken(e.target.value)} /></label><label>WINDOW<select defaultValue="60d"><option value="60d">60 days · daily</option><option value="30d">30 days · daily</option></select></label><button onClick={refresh} disabled={loading}>{loading ? <RefreshCw className="spin" size={16}/> : <RefreshCw size={16}/>} RUN POINT-IN-TIME AUDIT</button></section>
-    <section className="grid metrics"><Metric icon={<Activity/>} label="ALPHA STATUS" value={result.status} tone={result.status.toLowerCase()} sub={result.reason}/><Metric icon={<FlaskConical/>} label="ALPHA HALF-LIFE" value={result.halfLifeDays ? `${result.halfLifeDays}d` : '—'} sub="OOS decay estimate · daily snapshots"/><Metric icon={<BrainCircuit/>} label="CROWDING PROXY" value={crowd.score == null ? '—' : `${crowd.score}%`} tone="amber" sub="Signal agreement across simple agents"/><Metric icon={<SlidersHorizontal/>} label="DISAGREEMENT" value={crowd.disagreement == null ? '—' : `${crowd.disagreement}%`} sub="Independent model divergence"/></section>
-    <section className="grid main-grid"><div className="panel chart-panel"><PanelTitle icon={<Database/>} title="ALPHA LIFECYCLE" note="Walk-forward / out-of-sample"/><div className="chart"><div className="zero"/><svg viewBox="0 0 700 210" preserveAspectRatio="none"><polyline points="0,170 48,160 96,150 144,138 192,125 240,112 288,105 336,110 384,121 432,128 480,145 528,158 576,166 624,173 670,181 700,184" fill="none" stroke="#71e6a4" strokeWidth="3"/><polyline points="0,170 48,160 96,150 144,138 192,125 240,112 288,105 336,110 384,121 432,128 480,145 528,158 576,166 624,173 670,181 700,184" fill="none" stroke="#71e6a4" strokeOpacity=".18" strokeWidth="12"/></svg><div className="chart-labels"><span>TRAIN</span><span>OOS VALIDATION</span><span>AFTERLIFE</span></div></div><div className="legend"><span><i className="green-dot"/>Observed signal</span><span><i className="gray-dot"/>Look-ahead locked</span><span><i className="red-dot"/>Fees + slippage included</span></div></div><div className="panel decision-panel"><PanelTitle icon={<ShieldAlert/>} title="AFTERLIFE CLASSIFIER" note="Post-DEAD state"/><div className={`decision ${life.label === 'ABSTAIN' ? 'unknown' : ''}`}><div className="decision-kicker">HISTORICAL STATE · NOT A TRADE SIGNAL</div><strong>{life.label}</strong><p>{life.reason}</p></div><div className="agent-list"><Agent name="Flow Momentum" value={result.status === 'LIVE' ? 'FOLLOW' : 'WAIT'} icon={<ArrowUpRight/>}/><Agent name="Mean Reversion" value={life.label === 'INVERTED' ? 'FADE' : 'ABSTAIN'} icon={<ArrowDownRight/>}/><Agent name="Crowding Guard" value={(crowd.score ?? 0) > 70 ? 'ABSTAIN' : 'WAIT'} icon={<LockKeyhole/>}/></div></div></section>
-    <section className="panel methodology"><PanelTitle icon={<CircleHelp/>} title="AUDIT TRACE" note="Reproducible by design"/><div className="trace"><Trace n="01" title="Point-in-time" body="Daily historical holdings snapshots. No current labels or future prices."/><Trace n="02" title="Walk-forward" body="Train window is separated from an untouched OOS validation window."/><Trace n="03" title="Reality check" body="Fees, slippage, sample sufficiency and crowding are explicit gates."/><Trace n="04" title="Afterlife" body="DEAD → NEUTRAL / INVERTED / REBORN only when evidence is sufficient."/></div></section>
-    <footer><span><span className="dot green-dot"/> {snapshots.length ? `${snapshots.length} snapshots in audit` : 'No live snapshots loaded'}</span><span>API calls are not stored or redistributed · Research only</span></footer>
+    <header className="topbar">
+      <div className="brand"><div className="logo">α</div><div><div className="eyebrow">NANSEN RESEARCH LAYER</div><h1>Alpha Evolution Lab</h1></div></div>
+      <div className="header-actions"><span className="powered">Powered by <strong>Nansen</strong></span><span className="not-official">INDEPENDENT · NOT AN OFFICIAL NANSEN PRODUCT</span></div>
+    </header>
+
+    <section className="intro">
+      <div><div className="eyebrow accent">POINT-IN-TIME EDGE AUDIT</div><h2>Finding alpha is easy.<br/><em>Knowing whether it is still alpha is the edge.</em></h2><p>Nansen shows who is moving. This lab asks whether that historical signal is still alive.</p></div>
+      <div className={`mode ${live ? 'live' : configured ? 'ready' : ''}`}><span className="status-dot"/>{live ? 'LIVE · NANSEN DATA' : configured ? 'READY · LIVE NOT LOADED' : configured === false ? 'DEMO / NO-LIVE-DATA' : 'CHECKING API'}<small>{live ? `${history.length} settled daily snapshots · ${selected?.token_symbol}` : configured ? 'Run a point-in-time audit to load measured values' : 'No numerical result is displayed without a key'}</small></div>
+    </section>
+
+    <section className="controls">
+      <label>CHAIN<select value={chain} onChange={(event) => changeChain(event.target.value)}><option value="solana">Solana</option><option value="ethereum">Ethereum</option><option value="base">Base</option></select></label>
+      <label>TOKEN · FIXED AT WINDOW START<select value={selectedAddress} disabled={!tokens.length} onChange={(event) => { setSelectedAddress(event.target.value); setResult(null); setHistory([]) }}><option value="">{tokens.length ? 'Select a token' : 'Loaded after discovery'}</option>{tokens.map((token) => <option key={token.token_address} value={token.token_address}>{token.token_symbol} · {compactUsd(token.value_usd)} SM held at discovery</option>)}</select></label>
+      <label>SETTLED WINDOW<input value={`${startDate} → ${endDate}`} readOnly/></label>
+      <button onClick={runAudit} disabled={loading || configured !== true}>{loading ? <RefreshCw className="spin"/> : <Sparkles/>}{loading ? 'QUERYING NANSEN…' : result ? 'RERUN LIVE AUDIT' : 'RUN LIVE AUDIT'}</button>
+    </section>
+
+    {error && <div className="error-state"><AlertTriangle/><div><b>LIVE AUDIT FAILED</b><span>{error}</span></div></div>}
+
+    <section className={`hero-moment ${live ? '' : 'empty'}`}>
+      <div className="hero-head"><div><div className="eyebrow accent">THE HERO MOMENT</div><h3>{live ? `${selected?.token_symbol} looked like a signal. Is it still an edge?` : 'Load a live signal. Audit its lifecycle.'}</h3></div>{live && <span className={`meta-pill ${result?.metaState.toLowerCase()}`}>META STATE · {result?.metaState}</span>}</div>
+      <div className="hero-grid">
+        <HeroDatum label="SMART MONEY" value={live ? flowLabel : '—'} detail={live ? `Latest balance change ${percent(result!.latestFlow)}` : 'No placeholder value'}/>
+        <HeroDatum label="AGENT CONSENSUS" value={live ? percent(result!.agentAgreement, 0) : '—'} detail={live ? `${result!.agents.length} deterministic agents` : 'No placeholder value'}/>
+        <HeroDatum label="CROWDING PRESSURE" value={live ? percent(result!.crowdingPressure, 0) : '—'} detail={live ? 'Consensus + SM concentration percentile' : 'No placeholder value'}/>
+        <HeroDatum label="ALPHA STATUS" value={live ? result!.status : '—'} detail={live ? result!.reason : 'No placeholder value'} emphasis/>
+        <HeroDatum label="AFTERLIFE" value={live ? result!.afterlife : '—'} detail={live ? 'Only classified after statistically confirmed death' : 'No placeholder value'}/>
+      </div>
+    </section>
+
+    <section className="panel lifecycle-panel">
+      <div className="panel-title"><Activity/><div><h3>ALPHA LIFECYCLE</h3><small>DISCOVERED → LIVE → DECAYING → DEAD → AFTERLIFE</small></div></div>
+      <div className="lifecycle">
+        {lifecycle.map((stage, index) => <div className="lifecycle-segment" key={stage}><div className={`stage ${result && (stage === result.status || (stage === 'DISCOVERED' && result.trainExpectancy != null && result.trainExpectancy > 0)) ? 'active' : ''}`}><span>{String(index + 1).padStart(2, '0')}</span><b>{stage}</b></div>{index < lifecycle.length - 1 && <ArrowRight/>}</div>)}
+        <ArrowRight/>
+        <div className="afterlife-stack">{['NEUTRAL', 'INVERTED', 'REBORN'].map((stage) => <span className={result?.afterlife === stage ? 'active' : ''} key={stage}>{stage}</span>)}</div>
+      </div>
+    </section>
+
+    <section className="metric-grid">
+      <Metric icon={<FlaskConical/>} label="ALPHA HALF-LIFE" value={live && result!.alphaHalfLifeDays != null ? `${result!.alphaHalfLifeDays}d` : '—'} detail="First OOS rolling edge ≤ 50% of train"/>
+      <Metric icon={<BrainCircuit/>} label="AGENT DISAGREEMENT" value={live ? percent(result!.agentDisagreement, 0) : '—'} detail="1 − largest vote share"/>
+      <Metric icon={<Activity/>} label="OOS EXPECTANCY" value={live ? percent(result!.oosExpectancy) : '—'} detail={live && result!.oosCi ? `95% CI ${percent(result!.oosCi[0])} to ${percent(result!.oosCi[1])}` : 'Untouched final 40%'}/>
+      <Metric icon={<Database/>} label="SAMPLE SIZE" value={live ? `${result!.sampleSize}` : '—'} detail={live ? `${result!.trainSize} train · ${result!.oosSize} OOS pairs` : 'Consecutive daily pairs only'}/>
+      <Metric icon={<ShieldCheck/>} label="SIGNAL AGE" value={live && result!.signalAgeDays != null ? `${result!.signalAgeDays}d` : '—'} detail="Nansen token_age_days at final snapshot"/>
+      <Metric icon={<FlaskConical/>} label="COST-ADJUSTED" value={live ? percent(result!.costAdjustedExpectancy) : '—'} detail="10 bps deducted per observed signal"/>
+    </section>
+
+    <section className="two-column">
+      <div className="panel chart-panel"><div className="panel-title"><Database/><div><h3>MEASURED EDGE CURVE</h3><small>Cumulative cost-adjusted signal return · not token price</small></div></div>{points ? <div className="chart"><svg viewBox="0 0 700 220" preserveAspectRatio="none"><polyline points={points} fill="none" stroke="currentColor" strokeWidth="3"/></svg><div className="split" style={{ left: `${(result!.trainSize / result!.sampleSize) * 100}%` }}><span>OOS</span></div></div> : <div className="empty-chart">Run a live audit. No synthetic curve is rendered.</div>}</div>
+      <div className="panel agents-panel"><div className="panel-title"><BrainCircuit/><div><h3>INDEPENDENT SIMPLE AGENTS</h3><small>Consensus is treated as a crowding proxy</small></div></div><div className="agent-list">{live ? result!.agents.map((agent) => <div className="agent" key={agent.name}><div><b>{agent.name}</b><small>{agent.evidence}</small></div><span className={agent.direction.toLowerCase()}>{agent.direction}</span></div>) : <div className="empty-agents">No votes before live data is loaded.</div>}</div></div>
+    </section>
+
+    <section className="panel trace-panel"><div className="panel-title"><ShieldCheck/><div><h3>WHY THIS RESULT</h3><small>Endpoint → field → formula → measured value</small></div></div>{live ? <div className="trace-table">{result!.trace.map((item) => <div className="trace-row" key={item.formula}><code>{item.source}</code><span>{item.fields}</span><b>{item.formula}</b><strong>{item.value}</strong></div>)}</div> : <div className="empty-trace">Methodology trace appears only after a successful live audit.</div>}</section>
+
+    <footer><span>{live ? `LIVE · ${meta?.endpoint} · credits used ${meta?.creditsUsed ?? 'unreported'} · remaining ${meta?.creditsRemaining ?? 'unreported'}` : 'No raw Nansen data is persisted or redistributed.'}</span><span>Historical research classification · not investment advice</span></footer>
   </main>
 }
 
-function Metric({ icon, label, value, tone = '', sub }: { icon: React.ReactNode; label: string; value: string; tone?: string; sub: string }) { return <div className="metric"><div className="metric-icon">{icon}</div><div className="eyebrow">{label}</div><div className={`metric-value ${tone}`}>{value}</div><div className="metric-sub">{sub}</div></div> }
-function PanelTitle({ icon, title, note }: { icon: React.ReactNode; title: string; note: string }) { return <div className="panel-title"><span>{icon}</span><div><h3>{title}</h3><small>{note}</small></div></div> }
-function Agent({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) { return <div className="agent"><span>{icon}<b>{name}</b></span><strong>{value}</strong></div> }
-function Trace({ n, title, body }: { n: string; title: string; body: string }) { return <div className="trace-item"><span>{n}</span><div><b>{title}</b><p>{body}</p></div></div> }
+function HeroDatum({ label, value, detail, emphasis = false }: { label: string; value: string; detail: string; emphasis?: boolean }) { return <div className={`hero-datum ${emphasis ? 'emphasis' : ''}`}><span>{label}</span><strong>{value}</strong><small>{detail}</small></div> }
+function Metric({ icon, label, value, detail }: { icon: React.ReactNode; label: string; value: string; detail: string }) { return <div className="metric"><div className="metric-icon">{icon}</div><span>{label}</span><strong>{value}</strong><small>{detail}</small></div> }
 
 export default App
