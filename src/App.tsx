@@ -104,7 +104,7 @@ function App() {
       <label>CHAIN<select value={chain} onChange={(event) => changeChain(event.target.value)}><option value="solana">Solana</option><option value="ethereum">Ethereum</option><option value="base">Base</option></select></label>
       <label>TOKEN · FIXED AT WINDOW START<select value={selectedAddress} disabled={!tokens.length} onChange={(event) => { setSelectedAddress(event.target.value); setResult(null); setHistory([]) }}><option value="">{tokens.length ? 'Select a token' : 'Loaded after discovery'}</option>{tokens.map((token) => <option key={token.token_address} value={token.token_address}>{token.token_symbol} · {compactUsd(token.value_usd)} SM held at discovery</option>)}</select></label>
       <label>SETTLED WINDOW<input value={`${startDate} → ${endDate}`} readOnly/></label>
-      <button onClick={runAudit} disabled={loading || configured !== true}>{loading ? <RefreshCw className="spin"/> : <Sparkles/>}{loading ? 'QUERYING NANSEN…' : 'RERUN LIVE AUDIT'}</button>
+      <button onClick={runAudit} disabled={loading}>{loading ? <RefreshCw className="spin"/> : <Sparkles/>}{loading ? 'QUERYING NANSEN…' : 'RERUN LIVE AUDIT'}</button>
     </section>
 
     {error && <div className="error-state"><AlertTriangle/><div><b>LIVE AUDIT FAILED</b><span>{error}</span></div></div>}
