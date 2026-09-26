@@ -1,0 +1,755 @@
+{
+  "generatedAt": "2026-09-26T22:19:37.654Z",
+  "source": "https://api.nansen.ai/api/v1/smart-money/historical-holdings",
+  "chain": "solana",
+  "settledWindow": {
+    "from": "2026-06-24",
+    "to": "2026-09-23"
+  },
+  "methodology": "Universe fixed at window start; signal at t = sign(balance_24h_percent_change); return = market_cap_usd(t+1)/market_cap_usd(t)-1; 10 bps cost; chronological 60/40 split.",
+  "callsMade": 44,
+  "creditsUsed": 44,
+  "creditsRemaining": "20011",
+  "analyzedTokens": 43,
+  "universeOffset": 12,
+  "lifecycleCounts": {
+    "DEAD": 2,
+    "DECAYING": 2,
+    "UNKNOWN": 39
+  },
+  "afterlifeCounts": {
+    "ABSTAIN": 41,
+    "INVERTED": 1,
+    "NEUTRAL": 1
+  },
+  "invertedCases": [
+    "PERCOLATOR"
+  ],
+  "tokens": [
+    {
+      "symbol": "PUMPCADE",
+      "snapshots": 91,
+      "pairedObservations": 88,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.023051027152178584,
+      "oosExpectancy": 0.029513048749160237,
+      "oosCi": [
+        -0.014557907150526597,
+        0.07358400464884707
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.29395604395604397,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "GOBLIN",
+      "snapshots": 49,
+      "pairedObservations": 47,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.021704010122867705,
+      "oosExpectancy": 0.05093407960061775,
+      "oosCi": [
+        -0.019753366346981736,
+        0.12162152554821723
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.3852040816326531,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "ARC",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0023616919246989953,
+      "oosExpectancy": -0.0014563185326596322,
+      "oosCi": [
+        -0.018548109870799554,
+        0.015635472805480288
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "PUMP",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.016344999194462015,
+      "oosExpectancy": -0.0066422565509092575,
+      "oosCi": [
+        -0.0350887398441083,
+        0.021804226742289785
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.4836956521739131,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "KINS",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.03195449069852162,
+      "oosExpectancy": 0.02923798893757937,
+      "oosCi": [
+        -0.012952206530796071,
+        0.07142818440595482
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.32065217391304346,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "KLED",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "DECAYING",
+      "afterlife": "ABSTAIN",
+      "metaState": "WAIT",
+      "trainExpectancy": 0.012213136317614968,
+      "oosExpectancy": 0.0101933429196443,
+      "oosCi": [
+        -0.019375154927806684,
+        0.03976184076709528
+      ],
+      "alphaHalfLifeDays": 6,
+      "crowdingPressure": 0.2608695652173913,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "ANTHRP",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.0016394116725141268,
+      "oosExpectancy": -0.0032351026316252726,
+      "oosCi": [
+        -0.015294719075819245,
+        0.008824513812568699
+      ],
+      "alphaHalfLifeDays": 6,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "HYPE",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0063093949620376235,
+      "oosExpectancy": 0.0005433769078387792,
+      "oosCi": [
+        -0.013036411136808979,
+        0.014123164952486538
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.5869565217391304,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "ZEC",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.009200966645755837,
+      "oosExpectancy": 0.004006834233897428,
+      "oosCi": [
+        -0.02836435216991815,
+        0.03637802063771301
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.9619565217391304,
+      "agentDisagreement": 0
+    },
+    {
+      "symbol": "WOJAK",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.0050563936151874055,
+      "oosExpectancy": -0.028172795789633425,
+      "oosCi": [
+        -0.07548286555438222,
+        0.01913727397511537
+      ],
+      "alphaHalfLifeDays": 6,
+      "crowdingPressure": 0.3858695652173913,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "NVDAX",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.001532848862601546,
+      "oosExpectancy": -0.005437289387318683,
+      "oosCi": [
+        -0.011554187563516245,
+        0.000679608788878878
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.391304347826087,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "GOOGLX",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.00322441888633516,
+      "oosExpectancy": -0.005747915086236199,
+      "oosCi": [
+        -0.009885725721134551,
+        -0.0016101044513378467
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.391304347826087,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "SCNSOL",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.019008111757827014,
+      "oosExpectancy": -0.008413243474502067,
+      "oosCi": [
+        -0.02186064428129649,
+        0.005034157332292358
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "SQUIRE",
+      "snapshots": 92,
+      "pairedObservations": 89,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.003303056472145917,
+      "oosExpectancy": -0.009174243147525608,
+      "oosCi": [
+        -0.08684067310923588,
+        0.06849218681418467
+      ],
+      "alphaHalfLifeDays": 21,
+      "crowdingPressure": 0.28804347826086957,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "UNC",
+      "snapshots": 65,
+      "pairedObservations": 62,
+      "status": "DEAD",
+      "afterlife": "NEUTRAL",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.0074151044219731435,
+      "oosExpectancy": -0.043359440025575006,
+      "oosCi": [
+        -0.08635186681957621,
+        -0.00036701323157379423
+      ],
+      "alphaHalfLifeDays": 5,
+      "crowdingPressure": 0.2730769230769231,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "CLANKER",
+      "snapshots": 79,
+      "pairedObservations": 74,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.018896481046744865,
+      "oosExpectancy": -0.01673409483960299,
+      "oosCi": [
+        -0.08172820476055447,
+        0.04826001508134849
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.3876582278481013,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "$ELIZA",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.023265276011414482,
+      "oosExpectancy": -0.0033238892397087494,
+      "oosCi": [
+        -0.016901738043843685,
+        0.010253959564426188
+      ],
+      "alphaHalfLifeDays": 6,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "JITOSOL",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0033486456300660774,
+      "oosExpectancy": 0.0017571146585123752,
+      "oosCi": [
+        -0.011890421226974526,
+        0.015404650543999277
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "PENGU",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0044314870942821554,
+      "oosExpectancy": 0.01819975221760005,
+      "oosCi": [
+        -0.004502756607249379,
+        0.04090226104244948
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.7717391304347826,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "POPCAT",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.005887922377686213,
+      "oosExpectancy": 0.0028978897493782715,
+      "oosCi": [
+        -0.014035011464748486,
+        0.01983079096350503
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.6739130434782609,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "PERCOLATOR",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "DEAD",
+      "afterlife": "INVERTED",
+      "metaState": "FADE",
+      "trainExpectancy": 0.0040686545779102905,
+      "oosExpectancy": -0.0574275813464392,
+      "oosCi": [
+        -0.11124714979532947,
+        -0.0036080128975489317
+      ],
+      "alphaHalfLifeDays": 9,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "ALON",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.09343926807148925,
+      "oosExpectancy": -0.015772334842357395,
+      "oosCi": [
+        -0.07768977481667588,
+        0.0461451051319611
+      ],
+      "alphaHalfLifeDays": 8,
+      "crowdingPressure": 0.28804347826086957,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "THREE",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.0018766687522491078,
+      "oosExpectancy": -0.006455123865990407,
+      "oosCi": [
+        -0.05455163666016639,
+        0.04164138892818558
+      ],
+      "alphaHalfLifeDays": 6,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "ORE",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.010085760742801245,
+      "oosExpectancy": -0.023988541023900793,
+      "oosCi": [
+        -0.0605207698971021,
+        0.012543687849300517
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.7119565217391304,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "JUP",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.0007818835253445103,
+      "oosExpectancy": -0.0008137436477595153,
+      "oosCi": [
+        -0.024555215018505733,
+        0.022927727722986704
+      ],
+      "alphaHalfLifeDays": 5,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "CHILLHOUSE",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.01490876135023038,
+      "oosExpectancy": -0.02908690750886986,
+      "oosCi": [
+        -0.06370750983976077,
+        0.005533694822021044
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.2934782608695652,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "AVICI",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.006233000347626856,
+      "oosExpectancy": 0.006798509274744914,
+      "oosCi": [
+        -0.01715999335275451,
+        0.030757011902244336
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.391304347826087,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "JOTCHUA",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0025677584028541227,
+      "oosExpectancy": 0.026417991828613666,
+      "oosCi": [
+        -0.06519467496829774,
+        0.11803065862552507
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "TOKABU",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.020842090312363837,
+      "oosExpectancy": -0.015360569018584458,
+      "oosCi": [
+        -0.04308247218766723,
+        0.012361334150498317
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.5434782608695652,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "SOLANGELES",
+      "snapshots": 39,
+      "pairedObservations": 35,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.008691839195629093,
+      "oosExpectancy": -0.09725274077775632,
+      "oosCi": [
+        -0.20199849151595234,
+        0.007493009960439709
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.40064102564102566,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "GACHA",
+      "snapshots": 14,
+      "pairedObservations": 11,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": null,
+      "oosExpectancy": null,
+      "oosCi": null,
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.4107142857142857,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "AMZNX",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.003102841056269779,
+      "oosExpectancy": -0.002098243278217788,
+      "oosCi": [
+        -0.007681577638508679,
+        0.0034850910820731036
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.391304347826087,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "TCG",
+      "snapshots": 88,
+      "pairedObservations": 84,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.009179606528578674,
+      "oosExpectancy": -0.025410409673054715,
+      "oosCi": [
+        -0.09470936643157786,
+        0.043888547085468424
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.7670454545454546,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "DCA",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.012001393034392297,
+      "oosExpectancy": 0.02552810068082367,
+      "oosCi": [
+        -0.0175160106670102,
+        0.06857221202865754
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.3804347826086957,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "RETIRE",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.006501993657538404,
+      "oosExpectancy": -0.015228913027581677,
+      "oosCi": [
+        -0.04220072113506869,
+        0.011742895079905339
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "TRENCHER",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.009370123953230777,
+      "oosExpectancy": -0.009739608886808245,
+      "oosCi": [
+        -0.038732753379505214,
+        0.01925353560588872
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.2608695652173913,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "TBH",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.11489809574823158,
+      "oosExpectancy": 0.005783984244026362,
+      "oosCi": [
+        -0.040618289621580365,
+        0.05218625810963309
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.3858695652173913,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "CODEC",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0023170691897125098,
+      "oosExpectancy": -0.03397085511109965,
+      "oosCi": [
+        -0.08739884745414853,
+        0.019457137231949223
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.8586956521739131,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "VSK",
+      "snapshots": 19,
+      "pairedObservations": 16,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": null,
+      "oosExpectancy": null,
+      "oosCi": null,
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.45394736842105265,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "COPPERINU",
+      "snapshots": 71,
+      "pairedObservations": 69,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.01793072387934308,
+      "oosExpectancy": 0.06732354284398467,
+      "oosCi": [
+        0.009159368355465311,
+        0.12548771733250402
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.3890845070422535,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "GOAT",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "DECAYING",
+      "afterlife": "ABSTAIN",
+      "metaState": "WAIT",
+      "trainExpectancy": 0.0005051178413342362,
+      "oosExpectancy": 0.01359048985609717,
+      "oosCi": [
+        -0.003346966984681281,
+        0.03052794669687562
+      ],
+      "alphaHalfLifeDays": 7,
+      "crowdingPressure": 0.266304347826087,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "JUPSOL",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.004716891606184114,
+      "oosExpectancy": -0.003151917778429683,
+      "oosCi": [
+        -0.017943417000928392,
+        0.011639581444069028
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.875,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "SPX",
+      "snapshots": 92,
+      "pairedObservations": 90,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0052179049992326365,
+      "oosExpectancy": -0.0187852501795122,
+      "oosCi": [
+        -0.04426112430758837,
+        0.006690623948563974
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.7880434782608696,
+      "agentDisagreement": 0.25
+    }
+  ]
+}

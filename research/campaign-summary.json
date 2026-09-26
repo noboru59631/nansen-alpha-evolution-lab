@@ -1,0 +1,51 @@
+{
+  "verified_at": "2026-09-27T07:22:00+09:00",
+  "nansen_usage_analytics": {
+    "used_today": 101,
+    "total_usage": 101,
+    "requirement": "100+ API calls",
+    "requirement_met": true,
+    "note": "One additional PERCOLATOR UI audit was executed after the 101-call verification."
+  },
+  "main_90_day_study": {
+    "chain": "solana",
+    "settled_window": "2026-06-24 through 2026-09-23",
+    "fixed_universe_tokens": 55,
+    "lifecycle_counts": {
+      "LIVE": 0,
+      "DECAYING": 2,
+      "DEAD": 2,
+      "UNKNOWN": 51
+    },
+    "afterlife_counts": {
+      "NEUTRAL": 1,
+      "INVERTED": 1,
+      "REBORN": 0,
+      "ABSTAIN": 53
+    },
+    "confirmed_cases": [
+      {
+        "symbol": "UNC",
+        "lifecycle": "DEAD",
+        "afterlife": "NEUTRAL"
+      },
+      {
+        "symbol": "PERCOLATOR",
+        "lifecycle": "DEAD",
+        "afterlife": "INVERTED",
+        "train_expectancy": 0.0040686545779102905,
+        "oos_expectancy": -0.0574275813464392,
+        "oos_95_ci": [-0.11124714979532947, -0.0036080128975489317]
+      }
+    ]
+  },
+  "robustness_60_day_study": {
+    "fixed_universe_tokens": 11,
+    "confirmed_case": {
+      "symbol": "CBBTC",
+      "lifecycle": "DEAD",
+      "afterlife": "INVERTED"
+    },
+    "interpretation": "CBBTC was UNKNOWN in the 90-day study, so afterlife classification is window-sensitive."
+  }
+}

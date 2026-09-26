@@ -1,0 +1,215 @@
+{
+  "generatedAt": "2026-09-26T22:20:10.385Z",
+  "source": "https://api.nansen.ai/api/v1/smart-money/historical-holdings",
+  "chain": "solana",
+  "settledWindow": {
+    "from": "2026-07-24",
+    "to": "2026-09-23"
+  },
+  "methodology": "Universe fixed at window start; signal at t = sign(balance_24h_percent_change); return = market_cap_usd(t+1)/market_cap_usd(t)-1; 10 bps cost; chronological 60/40 split.",
+  "callsMade": 12,
+  "creditsUsed": 12,
+  "creditsRemaining": "19999",
+  "analyzedTokens": 11,
+  "universeOffset": 0,
+  "lifecycleCounts": {
+    "DEAD": 1,
+    "UNKNOWN": 10
+  },
+  "afterlifeCounts": {
+    "ABSTAIN": 10,
+    "INVERTED": 1
+  },
+  "invertedCases": [
+    "CBBTC"
+  ],
+  "tokens": [
+    {
+      "symbol": "TROLL",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": 0.017877537166001222,
+      "oosExpectancy": -0.014758367718867868,
+      "oosCi": [
+        -0.06833055725323776,
+        0.038813821815502025
+      ],
+      "alphaHalfLifeDays": 6,
+      "crowdingPressure": 0.2661290322580645,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "TRIPLET",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0025927895240556074,
+      "oosExpectancy": -0.01840237985866497,
+      "oosCi": [
+        -0.08143081400176887,
+        0.04462605428443893
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.27419354838709675,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "FARTCOIN",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0011722983822168946,
+      "oosExpectancy": -0.022167891684563037,
+      "oosCi": [
+        -0.047479594334543004,
+        0.0031438109654169308
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.27419354838709675,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "META",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.045826600458894494,
+      "oosExpectancy": 0.010899374360093935,
+      "oosCi": [
+        -0.009935511195434612,
+        0.03173425991562248
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.27419354838709675,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "ANSEM",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.05145798715482343,
+      "oosExpectancy": 0.01665454946645563,
+      "oosCi": [
+        -0.02423981622350274,
+        0.057548915156414
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.4959677419354839,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "CARDS",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.253085216013668,
+      "oosExpectancy": -0.014010267591500166,
+      "oosCi": [
+        -0.05161998622296669,
+        0.023599451039966357
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.3911290322580645,
+      "agentDisagreement": 0.25
+    },
+    {
+      "symbol": "NEET",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0158498452112363,
+      "oosExpectancy": -0.021426606676538302,
+      "oosCi": [
+        -0.06950374446741998,
+        0.026650531114343377
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.3629032258064516,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "USELESS",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.01721157599250954,
+      "oosExpectancy": 0.04998618321321118,
+      "oosCi": [
+        -0.03354553183825696,
+        0.13351789826467933
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.8387096774193548,
+      "agentDisagreement": 0
+    },
+    {
+      "symbol": "CBBTC",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "DEAD",
+      "afterlife": "INVERTED",
+      "metaState": "FADE",
+      "trainExpectancy": 0.001120081099324161,
+      "oosExpectancy": -0.013054596720351594,
+      "oosCi": [
+        -0.021034218318408175,
+        -0.005074975122295013
+      ],
+      "alphaHalfLifeDays": 5,
+      "crowdingPressure": 0.27419354838709675,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "JLP",
+      "snapshots": 62,
+      "pairedObservations": 60,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.0009452288099303251,
+      "oosExpectancy": -0.00688976191988859,
+      "oosCi": [
+        -0.015233356515640256,
+        0.001453832675863076
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.27419354838709675,
+      "agentDisagreement": 0.5
+    },
+    {
+      "symbol": "ETH",
+      "snapshots": 60,
+      "pairedObservations": 57,
+      "status": "UNKNOWN",
+      "afterlife": "ABSTAIN",
+      "metaState": "ABSTAIN",
+      "trainExpectancy": -0.008045448590193642,
+      "oosExpectancy": -0.012416906416156207,
+      "oosCi": [
+        -0.025712315504422566,
+        0.0008785026721101537
+      ],
+      "alphaHalfLifeDays": null,
+      "crowdingPressure": 0.9333333333333333,
+      "agentDisagreement": 0
+    }
+  ]
+}

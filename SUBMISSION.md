@@ -4,14 +4,15 @@
 
 Use a desktop viewport and keep the browser zoom at 100%. Do not expose `.env.local`, the API key, developer tools, or usage-account details.
 
-1. **0–6s — Thesis.** Start at the top: “Finding alpha is easy. Knowing whether it is still alpha is the edge.” Keep `READY · LIVE NOT LOADED` visible so the judge sees that no placeholder values are present.
-2. **6–14s — Live query.** Click **RUN LIVE AUDIT**. Let the loading state show, then hold on the green `LIVE · NANSEN DATA` badge and settled snapshot count.
-3. **14–26s — Hero Moment.** Show Smart Money direction → Agent Consensus → Crowding Pressure → Alpha Status → Afterlife → Meta State.
-4. **26–38s — Lifecycle.** Scroll just enough to center `DISCOVERED → LIVE → DECAYING → DEAD → AFTERLIFE`. Pause on the highlighted measured state.
-5. **38–50s — Evidence.** Show OOS expectancy, 95% interval, sample size, half-life, and the measured edge curve.
-6. **50–60s — Trust.** End on **WHY THIS RESULT**, where endpoint, fields, formulas, costs, and values are visible.
+1. **Before recording.** Load the Solana universe once, select `PERCOLATOR`, then leave the result cleared. This prepares the strongest measured case without exposing a key or using mock data.
+2. **0–6s — Thesis.** Start at the top: “Finding alpha is easy. Knowing whether it is still alpha is the edge.” Keep `READY · LIVE NOT LOADED` visible so the judge sees that no placeholder values are present.
+3. **6–14s — Live query.** Click **RUN LIVE AUDIT**. Let the loading state show, then hold on the green `LIVE · NANSEN DATA` badge and settled snapshot count.
+4. **14–26s — Hero Moment.** Show Smart Money direction → Agent Consensus → Crowding Pressure → `DEAD` → `INVERTED` → `FADE`.
+5. **26–38s — Lifecycle.** Scroll just enough to center `DISCOVERED → LIVE → DECAYING → DEAD → AFTERLIFE`. Pause on the measured `DEAD → INVERTED` state.
+6. **38–50s — Evidence.** Show OOS expectancy, its fully negative 95% interval, sample size, half-life, and measured edge curve.
+7. **50–60s — Trust.** End on **WHY THIS RESULT**, where endpoint, fields, formulas, costs, and values are visible.
 
-Recommended story: a Smart Money signal looks compelling; independent agents converge; crowding rises; OOS evidence weakens; the lifecycle classifier refuses to overclaim; the meta state becomes `WAIT` or `ABSTAIN`.
+Recommended story: a Smart Money signal was positive in training; OOS expectancy became statistically negative; the edge was classified `DEAD`; reversed post-death evidence became positive; the system measured `INVERTED` and labeled the historical meta state `FADE`.
 
 Do not try to force a particular lifecycle state. Record the measured result returned at demo time.
 
@@ -21,7 +22,7 @@ Finding alpha is easy. Knowing whether it is still alpha is the edge.
 
 I built Nansen Alpha Evolution Lab for the @nansen_ai Meridian Buildathon — a point-in-time research layer that audits Smart Money signals through LIVE → DECAYING → DEAD → NEUTRAL / INVERTED / REBORN.
 
-It uses walk-forward OOS testing, costs, confidence intervals, crowding, and agent disagreement — and abstains when evidence is weak. No fake win rates. No “AI beats the market” claim.
+Across 55 Solana tokens, most evidence remained unresolved. Two signals were statistically DEAD: one became NEUTRAL and one INVERTED. It uses walk-forward OOS testing, costs, confidence intervals, crowding, and agent disagreement — and abstains when evidence is weak. No fake win rates. No “AI beats the market” claim.
 
 Powered by Nansen. Independent project.
 
@@ -30,7 +31,7 @@ GitHub: https://github.com/noboru59631/nansen-alpha-evolution-lab
 
 ## Buildathon form description
 
-Nansen Alpha Evolution Lab is a point-in-time research tool that audits whether a Smart Money signal remains an edge after chronological out-of-sample testing, costs, and crowding. It reconstructs token-level daily histories from Nansen, fixes the candidate universe before the test window, measures lifecycle states from LIVE to DEAD, and classifies post-death evidence as NEUTRAL, INVERTED, REBORN, or ABSTAIN. It is not a trading bot: weak or insufficient evidence produces UNKNOWN/ABSTAIN, and every displayed value is traceable to a Nansen endpoint, field, and formula.
+Nansen Alpha Evolution Lab is a point-in-time research tool that audits whether a Smart Money signal remains an edge after chronological out-of-sample testing, costs, and crowding. It reconstructs token-level daily histories from Nansen, fixes the candidate universe before the test window, measures lifecycle states from LIVE to DEAD, and classifies post-death evidence as NEUTRAL, INVERTED, REBORN, or ABSTAIN. In a preregistered 55-token Solana study, two signals were statistically DEAD: one became NEUTRAL and one INVERTED. It is not a trading bot: weak or insufficient evidence produces UNKNOWN/ABSTAIN, and every displayed value is traceable to a Nansen endpoint, field, and formula.
 
 ## GitHub description
 
@@ -53,7 +54,7 @@ Nansen answers “Who is moving?” Alpha Evolution Lab adds the complementary q
 - [ ] Demo recording is 30–60 seconds, silent, and shows one coherent story.
 - [ ] Demo contains no API key, account details, notifications, or unrelated tabs.
 - [ ] X post tags `@nansen_ai` and includes the video and public GitHub link.
-- [ ] Nansen Usage Analytics confirms 100+ eligible calls during Sep 14–27.
+- [x] Nansen Usage Analytics confirms 101 eligible calls during Sep 14–27.
 - [ ] README notes the 100+ FAQ / 1,000-call landing-page discrepancy.
 - [ ] Submission form includes email, X post URL, and GitHub repository.
 - [ ] No performance, win-rate, inversion, or half-life claim exceeds measured evidence.

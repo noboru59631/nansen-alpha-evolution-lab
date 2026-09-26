@@ -3,7 +3,13 @@ import { auditToken, type HistoricalHolding } from '../src/analysis.ts'
 
 const endpoint = 'https://api.nansen.ai/api/v1/smart-money/historical-holdings'
 const limitArgument = process.argv.find((argument) => argument.startsWith('--limit='))
-const limit = Math.max(1, Math.min(50, Number(limitArgument?.split('=')[1] ?? 12)))
+const offsetArgument = process.argv.find((argument) => argument.startsWith('--offset='))
+const daysArgument = process.argv.find((argument) => argument.startsWith('--days='))
+const outputArgument = process.argv.find((argument) => argument.startsWith('--output='))
+const limit = Math.max(1, Math.min(100, Number(limitArgument?.split('=')[1] ?? 12)))
+const offset = Math.max(0, Number(offsetArgument?.split('=')[1] ?? 0))
+const windowDays = Math.max(30, Math.min(365, Number(daysArgument?.split('=')[1] ?? 94)))
+const output = outputArgument?.slice('--output='.length) || 'research/latest-findings.json'
 
 function isoDaysAgo(days: number) {
   const date = new Date()
@@ -32,7 +38,7 @@ async function call(key: string, body: Record<string, unknown>) {
 
 const key = await apiKey()
 const end = isoDaysAgo(3)
-const start = isoDaysAgo(94)
+const start = isoDaysAgo(windowDays)
 let callsMade = 0
 let creditsUsed = 0
 let creditsRemaining: string | null = null
@@ -46,7 +52,7 @@ callsMade += 1
 creditsUsed += discovery.creditsUsed
 creditsRemaining = discovery.creditsRemaining
 
-const candidates = discovery.data.filter((row) => row.token_address && row.market_cap_usd).slice(0, limit)
+const candidates = discovery.data.filter((row) => row.token_address && row.market_cap_usd).slice(offset, offset + limit)
 const tokens = []
 for (const candidate of candidates) {
   const history = await call(key, {
@@ -85,11 +91,12 @@ const report = {
   creditsUsed,
   creditsRemaining,
   analyzedTokens: tokens.length,
+  universeOffset: offset,
   lifecycleCounts: countBy('status'),
   afterlifeCounts: countBy('afterlife'),
   invertedCases: tokens.filter((token) => token.afterlife === 'INVERTED').map((token) => token.symbol),
   tokens,
 }
 
-await writeFile('research/latest-findings.json', `${JSON.stringify(report, null, 2)}\n`, 'utf8')
-console.log(JSON.stringify({ callsMade, creditsUsed, creditsRemaining, lifecycleCounts: report.lifecycleCounts, afterlifeCounts: report.afterlifeCounts, invertedCases: report.invertedCases }, null, 2))
+await writeFile(output, `${JSON.stringify(report, null, 2)}\n`, 'utf8')
+console.log(JSON.stringify({ output, callsMade, creditsUsed, creditsRemaining, lifecycleCounts: report.lifecycleCounts, afterlifeCounts: report.afterlifeCounts, invertedCases: report.invertedCases }, null, 2))

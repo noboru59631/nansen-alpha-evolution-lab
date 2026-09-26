@@ -14,23 +14,24 @@ Most trading dashboards ask whether a signal is bullish. This project asks wheth
 
 `FOLLOW`, `WAIT`, `ABSTAIN`, and `FADE` are historical state classifications. They are not investment advice, recommendations, or execution instructions.
 
-## Live result — September 26, 2026 UTC
+## Live result — September 27, 2026 UTC
 
-The reproducible cross-token run in [`research/latest-findings.json`](research/latest-findings.json) fixed the candidate universe at the beginning of the window to avoid selecting only tokens that survived until the end.
+The reproducible 90-day study combines [`research/latest-findings.json`](research/latest-findings.json) and [`research/validation-90d-next43.json`](research/validation-90d-next43.json). It fixed the candidate universe at the beginning of the window to avoid selecting only tokens that survived until the end.
 
 - Chain: Solana
 - Settled point-in-time window: 2026-06-24 through 2026-09-23
-- Universe: top 12 eligible Smart Money holdings at the window start
+- Universe: top 55 eligible Smart Money holdings at the window start
 - Observations: up to 90 consecutive signal→next-day pairs per token
-- Result: `UNKNOWN` 12, `LIVE` 0, `DECAYING` 0, `DEAD` 0
-- Afterlife: `ABSTAIN` 12, `NEUTRAL` 0, `INVERTED` 0, `REBORN` 0
-- No statistically confirmed inversion was found.
+- Lifecycle: `UNKNOWN` 51, `DECAYING` 2, `DEAD` 2, `LIVE` 0
+- Afterlife: `ABSTAIN` 53, `NEUTRAL` 1, `INVERTED` 1, `REBORN` 0
+- `UNC`: `DEAD → NEUTRAL`
+- `PERCOLATOR`: `DEAD → INVERTED`, with training expectancy +0.41%, OOS expectancy −5.74%, and a fully negative 95% OOS interval [−11.12%, −0.36%].
 
-This result is intentionally not polished into a win-rate claim. Under the fixed rules below, the tested Smart Money balance-direction signal did not establish enough evidence to label an edge alive or dead. Therefore the system abstained.
+A separate 60-day robustness run in [`research/robustness-60d-top11.json`](research/robustness-60d-top11.json) classified `CBBTC` as `DEAD → INVERTED`. In the 90-day study CBBTC was `UNKNOWN`, demonstrating that afterlife classification is window-sensitive and should not be generalized from one test.
 
-> **No evidence of alpha death is not evidence of a contrarian edge.**
+This result is intentionally not polished into a win-rate claim. Most signals remained unresolved, one confirmed death became neutral, and one showed statistically supported inversion under the preregistered rules.
 
-An exploratory current-universe screen found a `DECAYING` example, but it was excluded from the headline research finding because selecting at the end of the window introduces survivorship bias.
+> **Alpha death does not automatically create a contrarian edge. In this study, one did; one did not.**
 
 ## What the dashboard shows
 
@@ -161,7 +162,7 @@ Current status: typecheck PASS, 4 tests PASS, production build PASS. The tests c
 
 The latest official [Meridian Buildathon FAQ](https://release.nansen.ai/help/articles/3540155-nansen-meridian-buildathon-sep-14-27) requires **100+ API calls** between Sep 14–27. The campaign landing page still contains an older **1,000 calls** line. This project follows the latest FAQ while explicitly recording the discrepancy.
 
-The latest research run used 13 calls and reported 57 credits remaining; two subsequent end-to-end UI validations reported 55 remaining. This is not claimed as proof of the 100-call requirement. Verify the authoritative total in [Nansen API Usage Analytics](https://app.nansen.ai/api?tab=usage-analytics). Do not generate meaningless calls merely to increase the count; expand the fixed-universe research across more tokens or windows after obtaining sufficient campaign credits.
+Nansen [Usage Analytics](https://app.nansen.ai/api?tab=usage-analytics) showed **Used Today: 101 / Total Usage: 101** after the fixed-universe study and 60-day robustness validation. The requests were substantive candidate discovery and token-history analyses; no calls were generated solely to increase the count.
 
 The repository must remain public. Never commit `.env.local`, API keys, or raw API exports.
 
