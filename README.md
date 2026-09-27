@@ -57,7 +57,7 @@ No fixture, mock, demo number, or synthetic chart is rendered in LIVE mode. The 
 
 - The browser calls only `/api/nansen/*`; `NANSEN_API_KEY` exists only as a server-side Vercel Environment Variable.
 - The public first render is a saved, verified research snapshot. It is always labeled separately from live data.
-- Live requests validate the body, cap the historical window, use a 20-second timeout, cache successful identical requests for 60 seconds, suppress duplicate in-flight requests, and rate-limit each forwarded client address to 12 requests per 10 minutes per function instance.
+- Live requests validate the body, cap the historical window, use a 20-second timeout, cache successful identical requests for 60 seconds, suppress duplicate in-flight requests, and rate-limit each forwarded client address to 30 requests per 10 minutes per function instance.
 - Vercel Authentication is disabled for the public showcase URL so judges can open it anonymously. Nansen is not the official product owner or operator of this app.
 
 ## Methodology
