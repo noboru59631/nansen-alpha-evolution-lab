@@ -1,6 +1,6 @@
 const CACHE_TTL_MS = 60_000
 const RATE_WINDOW_MS = 10 * 60_000
-const MAX_REQUESTS_PER_WINDOW = 12
+const MAX_REQUESTS_PER_WINDOW = 30
 
 type CacheEntry = { expiresAt: number; payload: unknown; status: number }
 type InFlight = Promise<{ payload: unknown; status: number }>
